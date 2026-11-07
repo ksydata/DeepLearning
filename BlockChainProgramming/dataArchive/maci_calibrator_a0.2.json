@@ -1,0 +1,77 @@
+{
+  "format": "maci-calibrator/1",
+  "metadata": {
+    "created": "2026-10-22T07:55:34",
+    "maci_conformal": "0.2.2",
+    "alpha": 0.2,
+    "models": [
+      "deepseek/deepseek-v4.1-flash",
+      "z-ai/glm-5.3-flash",
+      "openai/gpt-6-luna"
+    ],
+    "evaluation": {
+      "n_fit": 240,
+      "n_holdout": 60,
+      "holdout_coverage": 0.9166666666666666,
+      "holdout_retention": 0.6579710144927536
+    },
+    "source": "wikibio (first 300 answers, first 4-7 claims each)",
+    "llm": {
+      "base_url": "https://openrouter.ai/api/v1",
+      "temperature": 0.0,
+      "max_tokens": null,
+      "scoring_prompt": "You are checking the factual accuracy of claims taken from an answer to a question.\n\nQuestion: {question}\n\nClaims:\n{claims}\n\nFor each claim, give the probability (a number from 0 to 1) that it is factually true. Judge each claim on its own using your own knowledge; do not assume the answer is correct. Use values near 0.5 when you are unsure.\n\nReply with JSON only, with exactly {n} numbers in the same order as the claims: {{\"scores\": [0.9, 0.1, ...]}}",
+      "scoring_prompt_id": "ba5531f180ea"
+    }
+  },
+  "model": {
+    "model_names": [
+      "deepseek/deepseek-v4.1-flash",
+      "z-ai/glm-5.3-flash",
+      "openai/gpt-6-luna"
+    ],
+    "grouper": "false_claim_risk",
+    "n_bins": 3,
+    "kwargs": {
+      "random_state": 123,
+      "solver": "osqp"
+    },
+    "alpha": 0.2,
+    "bin_edges": [
+      0.18717367424913778,
+      0.2067102165864861
+    ],
+    "bin_labels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "weights": {
+      "low": [
+        0.1052632011544685,
+        0.3714284656372008,
+        0.5233083332083307
+      ],
+      "medium": [
+        0.05886765953680715,
+        0.6470608007586937,
+        0.2940715397044992
+      ],
+      "high": [
+        0.20000000561727888,
+        0.13333333231871547,
+        0.6666666620640055
+      ]
+    },
+    "fallback_weights": [
+      0.10277805237945137,
+      0.3000000265295759,
+      0.5972219210909728
+    ],
+    "budgets": {
+      "low": 4.415362103076097,
+      "medium": 10.085077067129468,
+      "high": 3.757872317710605
+    }
+  }
+}
